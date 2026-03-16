@@ -24,3 +24,4 @@ async function dbConnect() : Promise<void>{
         process.exit(1)
     }
 }
+export default dbConnect
