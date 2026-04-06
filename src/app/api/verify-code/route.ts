@@ -14,6 +14,17 @@ export async function POST(request: Request) {
     const { username, code } = await request.json();
 
     //validate with zod
+
+    const result = VerifyCodeSchema.safeParse({code});
+
+    if(!result.success){
+      return Response.json({
+        success: false,
+        message: 'Invalid code'
+      },{
+        status: 400
+      })
+    }
     const decodedUsername = decodeURIComponent(username);
     const user = await UserModel.findOne({ username: decodedUsername });
 
@@ -24,7 +35,7 @@ export async function POST(request: Request) {
           message: "User not found",
         },
         {
-          status: 500,
+          status: 404,
         },
       );
     }
