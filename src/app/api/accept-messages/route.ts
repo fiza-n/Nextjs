@@ -17,7 +17,7 @@ export async function POST(request: Request) {
         message: "Unauthorized",
       },
       {
-          status: 401,
+          status: 404,
         },
     );
 }
@@ -39,7 +39,7 @@ const user: User = session.user;
           message: "failed to update user status to accepting Messages",
         },
         {
-          status: 401,
+          status: 404,
         },
       );
     }
@@ -71,8 +71,7 @@ export async function GET(request: Request) {
   await dbConnect();
 
   const session = await getServerSession(authOptions);
-  const user: User = session?.user;
-
+  
   if (!session || !session.user) {
     return Response.json(
       {
@@ -84,7 +83,8 @@ export async function GET(request: Request) {
       },
     );
   }
-
+  
+  const user: User = session.user;
   const userId = user._id;
   try {
     const foundUser = await UserModel.findById(userId);
