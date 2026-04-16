@@ -25,7 +25,7 @@ export async function GET(request: Request){
         const queryParams = {
             username : searchParams.get('username')
         }
-        //validate with zod
+        //validate with zod 
         const result = UsernameQuerySchema.safeParse(queryParams);
         console.log(result);
         if(!result.success){
@@ -51,7 +51,7 @@ export async function GET(request: Request){
        }
        return Response.json({
         success: true,
-        message: "Username is available"
+        message: "Username is Unique"
        },{
         status: 200
        })
